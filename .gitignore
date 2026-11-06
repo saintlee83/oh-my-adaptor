@@ -1,0 +1,10 @@
+node_modules/
+dist/
+release/
+.oh-my-adaptor/
+*.log
+.DS_Store
+.env
+.env.*
+!.env.example
+coverage/

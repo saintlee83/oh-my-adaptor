@@ -1,0 +1,95 @@
+{
+  "name": "oh-my-adaptor",
+  "version": "0.1.0",
+  "description": "One interface for your coding agents. A TypeScript SDK, CLI, and desktop workspace.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/core/index.d.ts",
+      "import": "./dist/core/index.js"
+    }
+  },
+  "bin": {
+    "oma": "./dist/cli.js",
+    "oh-my-adaptor": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "desktop",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "tsx src/cli.ts serve --dev",
+    "format": "prettier --write src tests desktop examples scripts *.json *.ts index.html",
+    "icons": "node scripts/generate-icon.mjs",
+    "build": "tsup && vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "check": "npm run typecheck && npm test && npm run build",
+    "start": "electron desktop/main.cjs",
+    "desktop": "npm run build && npm start",
+    "package:desktop": "npm run build && electron-builder --dir",
+    "cli": "tsx src/cli.ts"
+  },
+  "dependencies": {
+    "@fontsource/dm-sans": "^5.3.0",
+    "@fontsource/manrope": "^5.3.0",
+    "express": "^5.3.0",
+    "lucide-react": "^0.577.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-markdown": "^10.1.0"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.8",
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^6.0.0",
+    "electron": "^42.0.0",
+    "electron-builder": "^26.0.12",
+    "jsdom": "^31.0.0",
+    "prettier": "^3.9.10",
+    "tsup": "^8.5.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.6",
+    "vitest": "^5.1.0"
+  },
+  "build": {
+    "appId": "dev.ohmyadaptor.desktop",
+    "productName": "oh-my-adaptor",
+    "icon": "desktop/icon.png",
+    "extraMetadata": {
+      "main": "desktop/main.cjs"
+    },
+    "files": [
+      "dist/**/*",
+      "desktop/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "target": [
+        "dmg"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Development"
+    }
+  }
+}
